@@ -17,29 +17,26 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95w-Ws-I7k">
-                        <rect key="frame" x="92" y="4" width="220" height="20.333333333333332"/>
+                        <rect key="frame" x="92" y="4" width="212" height="36"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bjj-xv-9Ce">
-                        <rect key="frame" x="16" y="8" width="60" height="60"/>
+                        <rect key="frame" x="16" y="8" width="60" height="28"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="60" id="tsi-pf-DoJ"/>
                             <constraint firstAttribute="width" constant="60" id="zBs-HN-7c4"/>
                         </constraints>
                     </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="95w-Ws-I7k" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="0jh-Kd-C6f"/>
-                    <constraint firstItem="95w-Ws-I7k" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="45M-fw-hZm"/>
                     <constraint firstItem="95w-Ws-I7k" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="4Ax-u4-ou9"/>
                     <constraint firstItem="bjj-xv-9Ce" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="S49-n6-h6f"/>
                     <constraint firstItem="95w-Ws-I7k" firstAttribute="leading" secondItem="bjj-xv-9Ce" secondAttribute="trailing" constant="16" id="TfZ-Du-AHE"/>
                     <constraint firstAttribute="trailing" secondItem="95w-Ws-I7k" secondAttribute="trailing" constant="16" id="Zwn-js-Ol2"/>
                     <constraint firstItem="bjj-xv-9Ce" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="kGT-0R-paf"/>
                     <constraint firstAttribute="bottom" secondItem="bjj-xv-9Ce" secondAttribute="bottom" constant="8" id="paP-sX-8b0"/>
-                    <constraint firstAttribute="trailing" secondItem="95w-Ws-I7k" secondAttribute="trailing" constant="8" id="zpS-Te-qAZ"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

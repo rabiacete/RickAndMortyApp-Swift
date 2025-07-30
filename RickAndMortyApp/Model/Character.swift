@@ -22,4 +22,15 @@ struct Character: Codable {
     let status: String
     let species: String
     let image: String
+    let origin: Origin
+    let location: Location
+}
+
+
+struct Origin: Codable {
+    let name: String
+}
+
+struct Location: Codable {
+    let name: String
 }

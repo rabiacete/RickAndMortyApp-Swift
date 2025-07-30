@@ -79,6 +79,16 @@ class CharactersViewController: UITableViewController {
         }.resume()
     }
 
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let character = filteredCharacters[indexPath.row]
+        let detailVC = CharacterDetailViewController(nibName: "CharacterDetailViewController", bundle: nil)
+        detailVC.character = character
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+
+    
+    
     // MARK: - TableView Data Source
 
     // TableView satır sayısını filtrelenmiş karakterlere göre belirler
