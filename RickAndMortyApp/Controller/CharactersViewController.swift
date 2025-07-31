@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CharactersViewController: UITableViewController {
+final class CharactersViewController: UITableViewController {
 
     // Tüm karakterler burada tutulur
     var characters: [Character] = []
