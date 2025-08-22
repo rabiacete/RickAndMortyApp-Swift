@@ -24,11 +24,12 @@ final class CharactersViewController: UITableViewController {
 
     // TableView ayarları + filtreleme segmentini kurar
     private func setupTableView() {
-        let nib = UINib(nibName: "CharacterCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "CharacterCell")
+        let nib = UINib(nibName: String(describing: CharacterCell.self), bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: String(describing: CharacterCell.self))
         tableView.rowHeight = 80
 
-        // 🔹 Üstteki filtreleme segmenti (All / Alive / Dead / Unknown)
+
+        // Üstteki filtreleme segmenti (All / Alive / Dead / Unknown)
         let items = ["All", "Alive", "Dead", "Unknown"]
         let segmentedControl = UISegmentedControl(items: items)
         segmentedControl.selectedSegmentIndex = 0 // Başlangıçta All seçili
@@ -58,25 +59,25 @@ final class CharactersViewController: UITableViewController {
 
     // Sayfa sayfa karakter verilerini çeker
     private func fetchPage(from urlString: String) {
-        URLSession.shared.dataTask(with: URL(string: urlString)!) { data, _, _ in
-            guard let data = data,
-                  let response = try? JSONDecoder().decode(CharacterResponse.self, from: data) else { return }
-
+        NetworkManager.shared.fetchData(from: urlString, as: CharacterResponse.self) { result in
             DispatchQueue.main.async {
-                // Gelen karakterleri ana listeye ekle
-                self.characters += response.results
+                switch result {
+                case .success(let response):
+                    self.characters += response.results
+                    self.filteredCharacters = self.characters
+                    self.tableView.reloadData()
 
-                // İlk yükleme veya filtre resetlemek için tüm karakterleri göster
-                self.filteredCharacters = self.characters
+                    // Devam sayfası varsa tekrar çağır
+                    if let next = response.info.next {
+                        self.fetchPage(from: next)
+                    }
 
-                self.tableView.reloadData()
+                case .failure(let error):
+                    print("Hata oluştu: \(error.localizedDescription)")
+                }
             }
+        }
 
-            // Eğer bir sonraki sayfa varsa, onu da çek
-            if let next = response.info.next {
-                self.fetchPage(from: next)
-            }
-        }.resume()
     }
 
     
@@ -98,7 +99,10 @@ final class CharactersViewController: UITableViewController {
 
     // Hücreye ilgili karakteri göndererek yapılandırır
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "CharacterCell", for: indexPath) as? CharacterCell else {
+        // Daha güvenli: identifier'ı doğrudan sınıf isminden alıyoruz
+        let identifier = String(describing: CharacterCell.self)
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? CharacterCell else {
             return UITableViewCell()
         }
 
@@ -106,6 +110,7 @@ final class CharactersViewController: UITableViewController {
         cell.configure(with: character)
         return cell
     }
+
 }
 
 

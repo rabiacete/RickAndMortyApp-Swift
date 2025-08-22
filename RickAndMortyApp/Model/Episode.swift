@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct EpisodeResponse: Codable {
+struct EpisodeResponse: Decodable {
     let results: [Episode]
 }
 

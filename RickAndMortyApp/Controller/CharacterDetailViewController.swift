@@ -8,15 +8,15 @@
 
 import UIKit
 
-class CharacterDetailViewController: UIViewController {
+final class CharacterDetailViewController: UIViewController {
 
     // MARK: - IBOutlets
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var statusLabel: UILabel!
-    @IBOutlet weak var speciesLabel: UILabel!
-    @IBOutlet weak var originLabel: UILabel!
-    @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet private weak var imageView: UIImageView!
+    @IBOutlet private weak var nameLabel: UILabel!
+    @IBOutlet private weak var statusLabel: UILabel!
+    @IBOutlet private weak var speciesLabel: UILabel!
+    @IBOutlet private weak var originLabel: UILabel!
+    @IBOutlet private weak var locationLabel: UILabel!
 
     // MARK: - Veriyi dışarıdan alacağız
     var character: Character!

@@ -17,33 +17,41 @@ class LocationsViewController: UITableViewController {
         setupTableView()
         fetchLocations()
     }
-
+    
     private func setupTableView() {
-        let nib = UINib(nibName: "LocationCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "LocationCell")
+        //  identifier'ı sınıf isminden alıyoruz
+        let identifier = String(describing: LocationCell.self)
+        let nib = UINib(nibName: identifier, bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: identifier)
         tableView.rowHeight = 80
     }
 
+
     private func fetchLocations() {
-        guard let url = URL(string: "https://rickandmortyapi.com/api/location") else { return }
-
-        URLSession.shared.dataTask(with: url) { data, _, _ in
-            guard let data = data,
-                  let decoded = try? JSONDecoder().decode(LocationResponse.self, from: data) else { return }
-
+        NetworkManager.shared.fetchData(from: "https://rickandmortyapi.com/api/location", as: LocationResponse.self) { result in
             DispatchQueue.main.async {
-                self.locations = decoded.results
-                self.tableView.reloadData()
+                switch result {
+                case .success(let response):
+                    self.locations = response.results
+                    self.tableView.reloadData()
+
+                case .failure(let error):
+                    print("Hata oluştu: \(error.localizedDescription)")
+                }
             }
-        }.resume()
+        }
     }
+
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return locations.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "LocationCell", for: indexPath) as? LocationCell else {
+        //identifier'ı sınıf isminden alıyoruz
+        let identifier = String(describing: LocationCell.self)
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? LocationCell else {
             return UITableViewCell()
         }
 
@@ -51,6 +59,7 @@ class LocationsViewController: UITableViewController {
         cell.configure(with: location)
         return cell
     }
+
     
     
     // MARK: - Section Header (Name - Type - Dimension)

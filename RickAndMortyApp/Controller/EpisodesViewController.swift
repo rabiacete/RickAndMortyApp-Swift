@@ -20,24 +20,29 @@ class EpisodesViewController: UITableViewController {
     }
 
     private func setupTableView() {
-        let nib = UINib(nibName: "EpisodeCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "EpisodeCell")
+        //  identifier'ı sınıf isminden alıyoruz
+        let identifier = String(describing: EpisodeCell.self)
+        let nib = UINib(nibName: identifier, bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: identifier)
         tableView.rowHeight = 80
     }
 
+
     private func fetchEpisodes() {
-        guard let url = URL(string: "https://rickandmortyapi.com/api/episode") else { return }
-
-        URLSession.shared.dataTask(with: url) { data, _, _ in
-            guard let data = data,
-                  let decoded = try? JSONDecoder().decode(EpisodeResponse.self, from: data) else { return }
-
+        NetworkManager.shared.fetchData(from: "https://rickandmortyapi.com/api/episode", as: EpisodeResponse.self) { result in
             DispatchQueue.main.async {
-                self.episodes = decoded.results
-                self.tableView.reloadData()
+                switch result {
+                case .success(let response):
+                    self.episodes = response.results
+                    self.tableView.reloadData()
+
+                case .failure(let error):
+                    print("Hata oluştu: \(error.localizedDescription)")
+                }
             }
-        }.resume()
+        }
     }
+
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return episodes.count

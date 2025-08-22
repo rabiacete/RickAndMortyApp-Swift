@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct LocationResponse: Codable {
+struct LocationResponse: Decodable {
     let results: [LocationItem]
 }
 
